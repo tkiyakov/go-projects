@@ -1,31 +1,55 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"errors"
+)
+
 
 type BankAccount struct {
 	Owner string
 	Balance int
 }
 
-func (b *BankAccount) Deposit(amount int) {
+func (b *BankAccount) Deposit(amount int) error {
+	if amount <= 0 {
+		return errors.New("сумма должна быть больше нуля")
+	} 
+
 	b.Balance += amount
+	return nil
 }
 
-func (b *BankAccount) Withdraw(amount int) bool  {
+func (b *BankAccount) Withdraw(amount int) error  {
+	if amount <= 0 {
+		return errors.New("Сумма должна быть больше нуля")
+	}
+
 	if amount > b.Balance {
-		return false
+		return errors.New("недостаточно средств")
 	}
+
 	b.Balance -= amount
-	return true
+	return nil
 }
 
 
-func (b *BankAccount) Transfer(to *BankAccount, amount int) {
-	ok := b.Withdraw(amount)
-
-	if ok {
-		to.Deposit(amount)
+func (b *BankAccount) Transfer(to *BankAccount, amount int) error {
+	if b == to {
+		return errors.New("ты не можешь отправить самому себе")
 	}
+
+	err := b.Withdraw(amount) 
+
+	if err != nil {
+		return err	
+	}
+	err = to.Deposit(amount)
+
+	if err != nil {
+		return err
+	}
+	return nil
 
 }
 
@@ -45,7 +69,7 @@ func (b *BankAccount) IsRich() bool {
 func main() {
 	tamer := BankAccount{
 		Owner: "Tamer",
-		Balance: 1000,
+		Balance: 500,
 	}
 
 	adlet := BankAccount{
@@ -53,11 +77,21 @@ func main() {
 		Balance: 1000,
 	}
 
-	tamer.Transfer(&adlet, 600)
+
+	err := tamer.Transfer(&adlet, -300)
+	if err != nil {
+		fmt.Println(err)
+	}
 	tamer.Print()
 	adlet.Print()
 	fmt.Println()
 
-	fmt.Println(tamer.IsRich())
-	fmt.Println(tamer.Owner)
+	// fmt.Println(tamer.IsRich())
+	// fmt.Println(tamer.Owner)	
+	// 
+	// tamer.Withdraw(110)
+	// tamer.Print()
+
+	// adlet.Print()
+
 }
