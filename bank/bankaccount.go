@@ -62,36 +62,3 @@ func (b *BankAccount) Print() {
 func (b *BankAccount) IsRich() bool {
 	return b.Balance > 0
 }
-
-
-
-
-func main() {
-	tamer := BankAccount{
-		Owner: "Tamer",
-		Balance: 500,
-	}
-
-	adlet := BankAccount{
-		Owner: "Adlet",
-		Balance: 1000,
-	}
-
-
-	err := tamer.Transfer(&adlet, -300)
-	if err != nil {
-		fmt.Println(err)
-	}
-	tamer.Print()
-	adlet.Print()
-	fmt.Println()
-
-	// fmt.Println(tamer.IsRich())
-	// fmt.Println(tamer.Owner)	
-	// 
-	// tamer.Withdraw(110)
-	// tamer.Print()
-
-	// adlet.Print()
-
-}
