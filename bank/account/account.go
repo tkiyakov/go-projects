@@ -1,4 +1,4 @@
-package main
+package account
 
 type Account interface {
 	Deposit(amount int) error

@@ -1,13 +1,13 @@
-package main
+package account
 
 import (
 	"fmt"
 )
 
 type CreditAccount struct {
-	BankAccount 
+	BankAccount
 
-	Debt int
+	Debt            int
 	MounthlyPayment int
 }
 
@@ -17,3 +17,6 @@ func (c *CreditAccount) Print() {
 	fmt.Println(c.MounthlyPayment)
 }
 
+func (c CreditAccount) String() string {
+	return "Это кредитный счет"
+}

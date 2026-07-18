@@ -1,8 +1,8 @@
-package main
+package account
 
 import (
 	"fmt"
- 	// "errors"
+	// "errors"
 )
 
 type SavingsAccount struct {
@@ -26,8 +26,8 @@ func (s *SavingsAccount) ApplyInterest() error {
 	}
 	return nil
 
-	// но можно написать короче 
-	// -- return s.Deposit(int(interest)) -- 
+	// но можно написать короче
+	// -- return s.Deposit(int(interest)) --
 	// это значит если будет ошибка или успех, все вернется в любом случае
 
 }

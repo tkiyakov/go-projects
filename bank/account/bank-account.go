@@ -1,26 +1,25 @@
-package main
+package account
 
 import (
-	"fmt"
 	"errors"
+	"fmt"
 )
 
-
 type BankAccount struct {
-	Owner string
+	Owner   string
 	Balance int
 }
 
 func (b *BankAccount) Deposit(amount int) error {
 	if amount <= 0 {
 		return errors.New("сумма должна быть больше нуля")
-	} 
+	}
 
 	b.Balance += amount
 	return nil
 }
 
-func (b *BankAccount) Withdraw(amount int) error  {
+func (b *BankAccount) Withdraw(amount int) error {
 	if amount <= 0 {
 		return errors.New("Сумма должна быть больше нуля")
 	}
@@ -33,16 +32,15 @@ func (b *BankAccount) Withdraw(amount int) error  {
 	return nil
 }
 
-
 func (b *BankAccount) Transfer(to *BankAccount, amount int) error {
 	if b == to {
 		return errors.New("ты не можешь отправить самому себе")
 	}
 
-	err := b.Withdraw(amount) 
+	err := b.Withdraw(amount)
 
 	if err != nil {
-		return err	
+		return err
 	}
 	err = to.Deposit(amount)
 
@@ -53,7 +51,6 @@ func (b *BankAccount) Transfer(to *BankAccount, amount int) error {
 
 }
 
-
 func (b *BankAccount) Print() {
 	fmt.Println(b.Owner)
 	fmt.Println(b.Balance)
@@ -61,4 +58,8 @@ func (b *BankAccount) Print() {
 
 func (b *BankAccount) IsRich() bool {
 	return b.Balance > 0
+}
+
+func (b BankAccount) String() string {
+	return fmt.Sprintf("Владелец: %s, Баланс: %d", b.Owner, b.Balance)
 }
